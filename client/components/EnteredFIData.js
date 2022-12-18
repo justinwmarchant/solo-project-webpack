@@ -1,12 +1,13 @@
 import React from "react";
 
 const EnteredFIData = props => {
-    return <div> Entered Income: {props.income}
-    Entered Expenses: {props.expenses}
-    Years to Freedom: {props.yearsToFI}
-        <button>Update</button>
-        <button>Delete</button>
+    const fiEntries = props.dummy.map(entry => <div>{entry.monthlyIncome} {entry.monthlyExpenses} {entry.yearsToFiRemaining}<button>Update</button><button>Delete</button></div>)
+
+    return (
+    <div> 
+        {fiEntries}
     </div>
+    )
 }
 
 export default EnteredFIData

@@ -1,5 +1,5 @@
 body {
-  background: $lightBlue;
+ background: $lightBlue;
 }
 
 #board {
@@ -33,4 +33,9 @@ body {
     background-color: darken(white, 15);
   }
 
+}
+
+.header {
+  background-color: red;
+  color: white;
 }

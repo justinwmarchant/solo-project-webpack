@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import EnteredFIData from "./EnteredFIData";
 
+const DUMMY_DATA = [
+
+]
+
 const MainPage = (props) => {
   const [monthlyIncome, setMonthlyIncome] = useState(0);
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
@@ -29,6 +33,8 @@ const MainPage = (props) => {
     console.log(yearsToFiRemaining)
     setFIDisplay(true)
     setYearsToFI(yearsToFiRemaining)
+    DUMMY_DATA.push({monthlyIncome, monthlyExpenses, principal, returnOnInvestment, safeWithdrawal, yearsToFiRemaining})
+    console.log(DUMMY_DATA)
     // return yearsToFi
     //setBackend(false)
   };
@@ -86,7 +92,7 @@ const MainPage = (props) => {
         </div>
         <button type='submit'>Click Me!</button>
       </form>
-      {fiDisplay && <EnteredFIData expenses={monthlyExpenses} income={monthlyIncome} yearsToFI={yearsToFI}/>}
+      {fiDisplay && <EnteredFIData expenses={monthlyExpenses} income={monthlyIncome} yearsToFI={yearsToFI} dummy={DUMMY_DATA}/>}
     </div>
   );
 };
