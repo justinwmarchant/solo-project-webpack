@@ -1,6 +1,6 @@
 import React from "react";
 import MainPage from "./MainPage";
-import Header from "./Layout/Header"
+import Header from "./Layout/Header";
 
 function App() {
   return (

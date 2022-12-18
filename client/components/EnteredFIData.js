@@ -1,13 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 
-const EnteredFIData = props => {
-    const fiEntries = props.dummy.map(entry => <div>{entry.monthlyIncome} {entry.monthlyExpenses} {entry.yearsToFiRemaining}<button>Update</button><button>Delete</button></div>)
+const EnteredFIData = (props) => {
+  const [displayOption, setDisplayOption] = useState(false);
 
-    return (
-    <div> 
-        {fiEntries}
+//   let fiEntries = props.fiEntries.map((entry) => (
+//       <div>{`${entry.index}. ${entry.monthlyIncome} ${entry.monthlyExpenses} ${entry.yearsToFiRemaining}`}</div>
+//     ));
+
+
+  const onSubmitDelete = event => {
+    event.preventDefault()
+    props.deleteEntry(event.target.deletedEntry.value)
+  }
+
+  const deleteDisplayHandler = (event) => {
+    event.preventDefault();
+    setDisplayOption(true);
+  };
+
+  // const removeEntry = () => {
+  //     const newEntry = entries.filter()
+  // }
+
+  return (
+    <div>
+      {props.fiEntries.map((entry) => (
+      <div>{`${entry.index}. ${entry.monthlyIncome} ${entry.monthlyExpenses} ${entry.yearsToFiRemaining}`}</div>))}
+      <button>Update</button>
+      <button onClick={deleteDisplayHandler}>Delete</button>
+      {displayOption && (
+        <form onSubmit={props.deleteEntry}>
+          <input type='number' name='deletedEntry' onChange={(e) => (props.enteredNumber = e)}></input>
+          <button>Submit</button>
+        </form>
+      )}
     </div>
-    )
-}
+  );
+};
 
-export default EnteredFIData
+export default EnteredFIData;
