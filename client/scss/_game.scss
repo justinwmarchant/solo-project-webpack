@@ -1,41 +1,38 @@
 body {
- background: $lightBlue;
-}
-
-#board {
-  width: 390px;
-  height: 390px;
-  // border: 5px solid $lightOrange;
-  // background-color: $darkBlue;
-  margin: 20px auto;
-  padding: 0;
-}
-
-.square {
-  box-sizing: border-box;
-  float: left;
-  // display: inline-block;
-  font-size: 0;
-  line-height: 0;
-  width: 120px;
-  height: 120px;
-  border-radius: 4px;
-  background-color: white;
-  border: 1px solid gainsboro;
-  margin: 5px;
-  font-size: 2em;
-  font-weight: 550;
-  line-height: 100px;
-  text-align: center;
-  cursor: pointer;
-
-  &:hover {
-    background-color: darken(white, 15);
-  }
-
+  background-color: wheat;
 }
 
 .header {
   background-color: red;
   color: white;
+}
+
+.app-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.update-delete-buttons {
+  display: inline-block;
+  padding: 0.46em 1.6em;
+  border: 0.1em solid #000000;
+  margin: 0 0.2em 0.2em 0;
+  border-radius: 0.12em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  color: #000000;
+  text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
+  background-color: #ffffff;
+  text-align: center;
+  transition: all 0.15s;
+}
+
+.update-delete-buttons:hover {
+  text-shadow: 0 0 2em rgba(255,255,255,1);
+  color:#FFFFFF;
+  border-color:#FFFFFF;
 }

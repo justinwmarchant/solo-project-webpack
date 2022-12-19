@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import EnteredFIData from "./EnteredFIData";
-
-// const entries = [];
 
 const MainPage = (props) => {
   const [monthlyIncome, setMonthlyIncome] = useState(0);
@@ -11,53 +8,48 @@ const MainPage = (props) => {
   const [safeWithdrawal, setSafeWithdrawal] = useState(4);
   const [fiDisplay, setFIDisplay] = useState(false);
   const [yearsToFI, setYearsToFI] = useState(0);
-  const [fiEntries, setFIEntries] = useState([])
+  const [fiEntries, setFIEntries] = useState([]);
   const [displayOption, setDisplayOption] = useState(false);
-  const [enteredNumber, setEnteredNumber] = useState(0)
+  const [enteredNumber, setEnteredNumber] = useState(0);
+  const [updateDisplay, setUpdateDisplay] = useState(false);
+  const [updateDisplayForm, setUpdateDisplayForm] = useState(false);
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    //need to account for edge cases and improper values
     let yearlyNetworth = +principal;
     let yearsToFiRemaining = 0;
     let prevNetworth = +principal;
-    let index;
+    let index = 0;
     const yearlySavings = (monthlyIncome - monthlyExpenses) * 12;
     const fiNumber = (100 / safeWithdrawal) * monthlyExpenses * 12;
     if (monthlyExpenses >= monthlyIncome && principal < fiNumber)
       return console.log("Unfortunately, FI is not possible with these inputs");
     else {
+      index = fiEntries.length + 1
       for (let i = 0; fiNumber > yearlyNetworth; i++) {
         console.log(yearsToFiRemaining);
         yearlyNetworth =
-        yearlySavings + prevNetworth * (1 + returnOnInvestment / 100);
+          yearlySavings + prevNetworth * (1 + returnOnInvestment / 100);
         prevNetworth = yearlyNetworth;
         yearsToFiRemaining += 1;
-        index = fiEntries.length + 1
       }
     }
-    console.log(yearsToFiRemaining);
     setFIDisplay(true);
     setYearsToFI(yearsToFiRemaining);
     setFIEntries([
-      ...fiEntries, {
-      monthlyIncome,
-      monthlyExpenses,
-      principal,
-      returnOnInvestment,
-      safeWithdrawal,
-      yearsToFiRemaining,
-      index}]
-    );
-    // setFIEntries([...entries])
+      ...fiEntries,
+      {
+        monthlyIncome,
+        monthlyExpenses,
+        principal,
+        returnOnInvestment,
+        safeWithdrawal,
+        yearsToFiRemaining,
+        index,
+      },
+    ]);
     console.log(fiEntries);
-    // return yearsToFi
-    //setBackend(false)
   };
-
-  const showEntries = () => {
-    console.log(fiEntries)
-  }
 
   const deleteEntry = (event) => {
     event.preventDefault();
@@ -65,20 +57,45 @@ const MainPage = (props) => {
     const indexToDelete = +enteredNumber;
     const newEntries = fiEntries.filter((e) => e.index !== indexToDelete);
     for (let i = indexToDelete; i < fiEntries.length; i++) {
-        fiEntries[i].index = fiEntries[i].index - 1
+      fiEntries[i].index = fiEntries[i].index - 1;
     }
     console.log(newEntries);
     setFIEntries([...newEntries]);
-
-    // console.log(fiEntryState);
-    // fiEntries = newEntries.map((entry) => (
-    //   <div>{`${entry.index}. ${entry.monthlyIncome} ${entry.monthlyExpenses} ${entry.yearsToFiRemaining}`}</div>
-    // ));
+    setDisplayOption(false);
   };
 
   const deleteDisplayHandler = (event) => {
     event.preventDefault();
     setDisplayOption(true);
+  };
+
+  const updateDisplayHandler = (event) => {
+    event.preventDefault();
+    setUpdateDisplay(true);
+  };
+
+  const updateEntryForm = (event) => {
+    event.preventDefault();
+    setUpdateDisplayForm(true);
+  };
+
+  const updateFIEntry = (event) => {
+    event.preventDefault();
+    const indexToUpdate = +enteredNumber;
+    console.log(indexToUpdate);
+    const updateEntry = fiEntries.filter((e) => e.index === indexToUpdate);
+    console.log(updateEntry);
+    console.log(fiEntries);
+    for (const prop in fiEntries[indexToUpdate - 1]) {
+      console.log(fiEntries[indexToUpdate - 1]);
+      console.log(fiEntries[indexToUpdate - 1].monthlyExpenses);
+      fiEntries[indexToUpdate - 1].monthlyIncome = monthlyIncome;
+      fiEntries[indexToUpdate - 1].monthlyExpenses = monthlyExpenses;
+      fiEntries[indexToUpdate - 1].principal = principal;
+      fiEntries[indexToUpdate - 1].returnOnInvestment = returnOnInvestment;
+      fiEntries[indexToUpdate - 1].safeWithdrawal = safeWithdrawal;
+    }
+    setFIEntries([...fiEntries]);
   };
 
   return (
@@ -127,7 +144,9 @@ const MainPage = (props) => {
           />
         </div>
         <div>
-          <label htmlFor='safe-withdrawal-rate'>Safe Withdrawal Rate: (%)</label>
+          <label htmlFor='safe-withdrawal-rate'>
+            Safe Withdrawal Rate: (%)
+          </label>
           <input
             value={safeWithdrawal}
             type='number'
@@ -135,19 +154,73 @@ const MainPage = (props) => {
             onChange={(e) => setSafeWithdrawal(e.target.value)}
           />
         </div>
-        <button type='submit'>Click Me!</button>
+          <button type='submit'>Save</button>
       </form>
-      <button onClick={showEntries}>Entries</button>
 
-     {/** {fiDisplay && <EnteredFIData dummy={entries} fiEntries={fiEntries} deleteEntry={deleteEntry} enteredNumber={enteredNumber}/>} */}
-
-     {fiEntries.map((entry) => (
-      <div>{`${entry.index}. ${entry.monthlyIncome} ${entry.monthlyExpenses} ${entry.yearsToFiRemaining}`}</div>))}
-      <button>Update</button>
+      {/** {fiDisplay && <EnteredFIData dummy={entries} fiEntries={fiEntries} deleteEntry={deleteEntry} enteredNumber={enteredNumber}/>} */}
+      <div>Saved Entries:
+      {fiEntries.map((entry) => (
+        <div>{`${entry.index}. Monthly Income: ${entry.monthlyIncome} Monthly Expenses: ${entry.monthlyExpenses} Years to Freedom: ${entry.yearsToFiRemaining}`}</div>
+      ))}
+      </div>
+      <div className="update-delete-buttons">
+      <button onClick={updateDisplayHandler}>Update</button>
       <button onClick={deleteDisplayHandler}>Delete</button>
+      </div>
       {displayOption && (
         <form onSubmit={deleteEntry}>
-          <input type='number' name='deletedEntry' onChange={(e) => (setEnteredNumber(e.target.value))}></input>
+          <input
+            type='number'
+            name='deletedEntry'
+            onChange={(e) => setEnteredNumber(e.target.value)}
+          ></input>
+          <button type='submit'>Submit</button>
+        </form>
+      )}
+      {updateDisplay && (
+        <form onSubmit={updateEntryForm}>
+          <input
+            type='number'
+            name='updatedEntry'
+            onChange={(e) => setEnteredNumber(e.target.value)}
+          ></input>
+          <button type='submit'>Submit</button>
+        </form>
+      )}
+      {updateDisplayForm && (
+        <form onSubmit={updateFIEntry}>
+          <input
+            value={monthlyIncome}
+            type='number'
+            min='1'
+            step='any'
+            name='updated-monthly-income'
+            onChange={(e) => setMonthlyIncome(e.target.value)}
+          ></input>
+          <input
+            value={monthlyExpenses}
+            type='number'
+            name='updated-monthly-expenses'
+            onChange={(e) => setMonthlyExpenses(e.target.value)}
+          ></input>
+          <input
+            value={principal}
+            type='number'
+            name='updated-principal'
+            onChange={(e) => setPrincipal(e.target.value)}
+          ></input>
+          <input
+            value={returnOnInvestment}
+            type='number'
+            name='updated-return-on-investment'
+            onChange={(e) => setReturnOnInvestment(e.target.value)}
+          ></input>
+          <input
+            value={safeWithdrawal}
+            type='number'
+            name='updated-safe-withdrawal'
+            onChange={(e) => setSafeWithdrawal(e.target.value)}
+          ></input>
           <button type='submit'>Submit</button>
         </form>
       )}
