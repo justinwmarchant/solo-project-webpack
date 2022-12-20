@@ -14,6 +14,7 @@ const MainPage = (props) => {
   const [updateDisplay, setUpdateDisplay] = useState(false);
   const [updateDisplayForm, setUpdateDisplayForm] = useState(false);
 
+
   const formSubmitHandler = (event) => {
     event.preventDefault();
     let yearlyNetworth = +principal;
@@ -80,12 +81,23 @@ const MainPage = (props) => {
   };
 
   const updateFIEntry = (event) => {
+    let yearlyNetworth = +principal;
+    let yearsToFiRemaining = 0
+    let prevNetworth = +principal;
+    const fiNumber = (100 / safeWithdrawal) * monthlyExpenses * 12
+    const yearlySavings = (monthlyIncome - monthlyExpenses) * 12;
     event.preventDefault();
     const indexToUpdate = +enteredNumber;
     console.log(indexToUpdate);
     const updateEntry = fiEntries.filter((e) => e.index === indexToUpdate);
     console.log(updateEntry);
-    console.log(fiEntries);
+    console.log(fiEntries);    
+    for (let i = 0; fiNumber > yearlyNetworth; i++) {
+        yearlyNetworth =
+          yearlySavings + prevNetworth * (1 + returnOnInvestment / 100);
+        prevNetworth = yearlyNetworth;
+        yearsToFiRemaining += 1;
+      }
     for (const prop in fiEntries[indexToUpdate - 1]) {
       console.log(fiEntries[indexToUpdate - 1]);
       console.log(fiEntries[indexToUpdate - 1].monthlyExpenses);
@@ -94,8 +106,10 @@ const MainPage = (props) => {
       fiEntries[indexToUpdate - 1].principal = principal;
       fiEntries[indexToUpdate - 1].returnOnInvestment = returnOnInvestment;
       fiEntries[indexToUpdate - 1].safeWithdrawal = safeWithdrawal;
+      fiEntries[indexToUpdate - 1].yearsToFiRemaining = yearsToFiRemaining
     }
     setFIEntries([...fiEntries]);
+
   };
 
   return (
@@ -154,7 +168,7 @@ const MainPage = (props) => {
             onChange={(e) => setSafeWithdrawal(e.target.value)}
           />
         </div>
-          <button type='submit'>Save</button>
+          <button className='save-button' type='submit'>Save</button>
       </form>
 
       {/** {fiDisplay && <EnteredFIData dummy={entries} fiEntries={fiEntries} deleteEntry={deleteEntry} enteredNumber={enteredNumber}/>} */}
@@ -164,8 +178,8 @@ const MainPage = (props) => {
       ))}
       </div>
       <div className="update-delete-buttons">
-      <button onClick={updateDisplayHandler}>Update</button>
-      <button onClick={deleteDisplayHandler}>Delete</button>
+      <button className= "update-button" onClick={updateDisplayHandler}>Update</button>
+      <button className= "delete-button" onClick={deleteDisplayHandler}>Delete</button>
       </div>
       {displayOption && (
         <form onSubmit={deleteEntry}>
