@@ -115,11 +115,11 @@ const MainPage = (props) => {
   return (
     <div className='main-page-display'>
       <h2>The FIRE Drill</h2>
-      <form onSubmit={formSubmitHandler}>
-        <label>Well let's see...</label>
+      <form className='main-form' onSubmit={formSubmitHandler}>
         <div>
           <label htmlFor='monthly-income'>Monthly Take-Home Income ($):</label>
           <input
+          id='monthly-income'
             value={monthlyIncome}
             type='number'
             name='monthly-income'
@@ -131,6 +131,7 @@ const MainPage = (props) => {
         <div>
           <label htmlFor='monthly-expenses'>Monthly Expenses ($):</label>
           <input
+          id='monthly-income'
             value={monthlyExpenses}
             type='number'
             name='monthly-expenses'
@@ -140,6 +141,7 @@ const MainPage = (props) => {
         <div>
           <label htmlFor='principal'>Starting Portfolio Value ($):</label>
           <input
+          id='monthly-income'
             value={principal}
             type='number'
             name='principal'
@@ -151,6 +153,7 @@ const MainPage = (props) => {
             Expected Return on Investments (Interest Earned - Inflation) (%):
           </label>
           <input
+          id='monthly-income'
             value={returnOnInvestment}
             type='number'
             name='monthly-income'
@@ -162,6 +165,7 @@ const MainPage = (props) => {
             Safe Withdrawal Rate: (%)
           </label>
           <input
+          id='monthly-income'
             value={safeWithdrawal}
             type='number'
             name='monthly-income'

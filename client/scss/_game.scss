@@ -1,5 +1,6 @@
 body {
   background-color: rgb(14, 0, 96);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .app-body {
@@ -11,7 +12,7 @@ body {
 
 .header {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   background-color: rgb(162, 0, 0);
   color: white;
@@ -21,6 +22,30 @@ body {
   margin-bottom: 10px;
   // margin-left: 250px;
   // margin-right: 250px;
+  border-radius: 10px;
+}
+
+a {
+  display: inline-block;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.main-form {
+  list-style: none;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 90%;
+  max-width: 40rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 6px;
+  background: #8db046;
+  color: #000000;
+}
+
+#monthly-income {
+  background-color: #ffffff;
+  margin-left: 100px;
   border-radius: 10px;
 }
 
