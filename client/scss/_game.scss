@@ -15,13 +15,12 @@ body {
   justify-content: space-around;
   align-items: center;
   background-color: rgb(162, 0, 0);
+  box-shadow: 0 2px 8px rgb(255, 255, 255);
   color: white;
   height: 100px;
   width: 1000px;
   margin-top: 10px;
   margin-bottom: 10px;
-  // margin-left: 250px;
-  // margin-right: 250px;
   border-radius: 10px;
 }
 
@@ -31,22 +30,30 @@ a {
   text-decoration: none;
 }
 
+.main-page-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .main-form {
-  list-style: none;
-  margin: 0 auto;
   padding: 1rem;
-  width: 90%;
-  max-width: 40rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  box-shadow: 0 2px 8px rgb(255, 255, 255);
   border-radius: 6px;
   background: #8db046;
   color: #000000;
-}
-
-#monthly-income {
-  background-color: #ffffff;
-  margin-left: 100px;
-  border-radius: 10px;
+  max-width: 750px;
+  margin: 2rem auto;
+  label  {
+    display: block;
+    padding: .5rem 0;
+  }
+  input {
+    width: 25%;
+    padding: .25rem;
+    border-radius: .25rem;
+  }
 }
 
 .update-button, .delete-button, .save-button {
@@ -54,7 +61,7 @@ a {
   padding: 0.46em 1.6em;
   border: 0.1em solid #000000;
   margin: 0 0.2em 0.2em 0;
-  border-radius: 0.12em;
+  border-radius: 0.5em;
   box-sizing: border-box;
   text-decoration: none;
   font-family: "Roboto", sans-serif;
@@ -64,6 +71,7 @@ a {
   background-color: rgb(162, 0, 0);
   text-align: center;
   transition: all 0.15s;
+  width: auto;
 }
 
 .update-button:hover, .delete-button:hover, .save-button:hover {
@@ -71,5 +79,9 @@ a {
   color:#ffffff;
   border-color: #7a95b0;
   background-color: #7a95b0;
+  cursor: pointer;
+}
 
+.save-button {
+  margin-top: 1rem;
 }

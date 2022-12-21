@@ -14,7 +14,6 @@ const MainPage = (props) => {
   const [updateDisplay, setUpdateDisplay] = useState(false);
   const [updateDisplayForm, setUpdateDisplayForm] = useState(false);
 
-
   const formSubmitHandler = (event) => {
     event.preventDefault();
     let yearlyNetworth = +principal;
@@ -26,7 +25,7 @@ const MainPage = (props) => {
     if (monthlyExpenses >= monthlyIncome && principal < fiNumber)
       return console.log("Unfortunately, FI is not possible with these inputs");
     else {
-      index = fiEntries.length + 1
+      index = fiEntries.length + 1;
       for (let i = 0; fiNumber > yearlyNetworth; i++) {
         console.log(yearsToFiRemaining);
         yearlyNetworth =
@@ -82,22 +81,22 @@ const MainPage = (props) => {
 
   const updateFIEntry = (event) => {
     let yearlyNetworth = +principal;
-    let yearsToFiRemaining = 0
+    let yearsToFiRemaining = 0;
     let prevNetworth = +principal;
-    const fiNumber = (100 / safeWithdrawal) * monthlyExpenses * 12
+    const fiNumber = (100 / safeWithdrawal) * monthlyExpenses * 12;
     const yearlySavings = (monthlyIncome - monthlyExpenses) * 12;
     event.preventDefault();
     const indexToUpdate = +enteredNumber;
     console.log(indexToUpdate);
     const updateEntry = fiEntries.filter((e) => e.index === indexToUpdate);
     console.log(updateEntry);
-    console.log(fiEntries);    
+    console.log(fiEntries);
     for (let i = 0; fiNumber > yearlyNetworth; i++) {
-        yearlyNetworth =
-          yearlySavings + prevNetworth * (1 + returnOnInvestment / 100);
-        prevNetworth = yearlyNetworth;
-        yearsToFiRemaining += 1;
-      }
+      yearlyNetworth =
+        yearlySavings + prevNetworth * (1 + returnOnInvestment / 100);
+      prevNetworth = yearlyNetworth;
+      yearsToFiRemaining += 1;
+    }
     for (const prop in fiEntries[indexToUpdate - 1]) {
       console.log(fiEntries[indexToUpdate - 1]);
       console.log(fiEntries[indexToUpdate - 1].monthlyExpenses);
@@ -106,20 +105,25 @@ const MainPage = (props) => {
       fiEntries[indexToUpdate - 1].principal = principal;
       fiEntries[indexToUpdate - 1].returnOnInvestment = returnOnInvestment;
       fiEntries[indexToUpdate - 1].safeWithdrawal = safeWithdrawal;
-      fiEntries[indexToUpdate - 1].yearsToFiRemaining = yearsToFiRemaining
+      fiEntries[indexToUpdate - 1].yearsToFiRemaining = yearsToFiRemaining;
     }
     setFIEntries([...fiEntries]);
-
   };
 
   return (
+
+    //Main Form
+
+
     <div className='main-page-display'>
       <h2>The FIRE Drill</h2>
       <form className='main-form' onSubmit={formSubmitHandler}>
         <div>
-          <label htmlFor='monthly-income'>Monthly Take-Home Income ($):</label>
+          <label id='main-form-label' htmlFor='monthly-income'>
+            Monthly Take-Home Income ($):
+          </label>
           <input
-          id='monthly-income'
+            id='monthly-income'
             value={monthlyIncome}
             type='number'
             name='monthly-income'
@@ -129,9 +133,11 @@ const MainPage = (props) => {
           />
         </div>
         <div>
-          <label htmlFor='monthly-expenses'>Monthly Expenses ($):</label>
+          <label id='main-form-label' htmlFor='monthly-expenses'>
+            Monthly Expenses ($):
+          </label>
           <input
-          id='monthly-income'
+            id='monthly-expenses'
             value={monthlyExpenses}
             type='number'
             name='monthly-expenses'
@@ -139,9 +145,11 @@ const MainPage = (props) => {
           />
         </div>
         <div>
-          <label htmlFor='principal'>Starting Portfolio Value ($):</label>
+          <label id='main-form-label' htmlFor='principal'>
+            Starting Portfolio Value ($):
+          </label>
           <input
-          id='monthly-income'
+            id='principal'
             value={principal}
             type='number'
             name='principal'
@@ -149,11 +157,11 @@ const MainPage = (props) => {
           />
         </div>
         <div>
-          <label htmlFor='return-on-investment'>
+          <label id='main-form-label' htmlFor='return-on-investment'>
             Expected Return on Investments (Interest Earned - Inflation) (%):
           </label>
           <input
-          id='monthly-income'
+            id='return-on-investment'
             value={returnOnInvestment}
             type='number'
             name='monthly-income'
@@ -161,30 +169,45 @@ const MainPage = (props) => {
           />
         </div>
         <div>
-          <label htmlFor='safe-withdrawal-rate'>
-            Safe Withdrawal Rate: (%)
+          <label id='main-form-label' htmlFor='safe-withdrawal-rate'>
+            Safe Withdrawal Rate (%):
           </label>
           <input
-          id='monthly-income'
+            id='safe-withdrawal-rate'
             value={safeWithdrawal}
             type='number'
             name='monthly-income'
             onChange={(e) => setSafeWithdrawal(e.target.value)}
           />
         </div>
-          <button className='save-button' type='submit'>Save</button>
+        <button className='save-button' type='submit'>
+          Save
+        </button>
       </form>
 
-      {/** {fiDisplay && <EnteredFIData dummy={entries} fiEntries={fiEntries} deleteEntry={deleteEntry} enteredNumber={enteredNumber}/>} */}
-      <div>Saved Entries:
-      {fiEntries.map((entry) => (
-        <div>{`${entry.index}. Monthly Income: ${entry.monthlyIncome} Monthly Expenses: ${entry.monthlyExpenses} Years to Freedom: ${entry.yearsToFiRemaining}`}</div>
-      ))}
+
+    {/* Entries that appear after clicking save */}
+
+
+      <div>
+        The FIRE Log:
+        {fiEntries.map((entry) => (
+          <div>{`${entry.index}. Monthly Income: ${entry.monthlyIncome} Monthly Expenses: ${entry.monthlyExpenses} Years to Freedom: ${entry.yearsToFiRemaining}`}</div>
+        ))}
       </div>
-      <div className="update-delete-buttons">
-      <button className= "update-button" onClick={updateDisplayHandler}>Update</button>
-      <button className= "delete-button" onClick={deleteDisplayHandler}>Delete</button>
+      <div className='update-delete-buttons'>
+        <button className='update-button' onClick={updateDisplayHandler}>
+          Update
+        </button>
+        <button className='delete-button' onClick={deleteDisplayHandler}>
+          Delete
+        </button>
       </div>
+
+
+      {/* Display after you click delete button */}
+
+
       {displayOption && (
         <form onSubmit={deleteEntry}>
           <input
@@ -195,6 +218,11 @@ const MainPage = (props) => {
           <button type='submit'>Submit</button>
         </form>
       )}
+
+
+      {/*Display after you click update button */}
+
+
       {updateDisplay && (
         <form onSubmit={updateEntryForm}>
           <input
@@ -205,6 +233,10 @@ const MainPage = (props) => {
           <button type='submit'>Submit</button>
         </form>
       )}
+
+      {/* Display after you select which entry to update */}
+
+
       {updateDisplayForm && (
         <form onSubmit={updateFIEntry}>
           <input
