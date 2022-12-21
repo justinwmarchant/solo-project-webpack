@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Card from "./Layout/Card";
 
 const MainPage = (props) => {
   const [monthlyIncome, setMonthlyIncome] = useState(0);
@@ -9,6 +10,7 @@ const MainPage = (props) => {
   const [fiDisplay, setFIDisplay] = useState(false);
   const [yearsToFI, setYearsToFI] = useState(0);
   const [fiEntries, setFIEntries] = useState([]);
+  const [displayFIEntries, setDisplayFIEntries] = useState(false);
   const [displayOption, setDisplayOption] = useState(false);
   const [enteredNumber, setEnteredNumber] = useState(0);
   const [updateDisplay, setUpdateDisplay] = useState(false);
@@ -49,6 +51,7 @@ const MainPage = (props) => {
       },
     ]);
     console.log(fiEntries);
+    setDisplayFIEntries(true);
   };
 
   const deleteEntry = (event) => {
@@ -62,6 +65,9 @@ const MainPage = (props) => {
     console.log(newEntries);
     setFIEntries([...newEntries]);
     setDisplayOption(false);
+    if (fiEntries.length <= 0) {
+      setDisplayFIEntries(false);
+    }
   };
 
   const deleteDisplayHandler = (event) => {
@@ -108,12 +114,12 @@ const MainPage = (props) => {
       fiEntries[indexToUpdate - 1].yearsToFiRemaining = yearsToFiRemaining;
     }
     setFIEntries([...fiEntries]);
+    setUpdateDisplayForm(false);
+    setUpdateDisplay(false);
   };
 
   return (
-
     //Main Form
-
 
     <div className='main-page-display'>
       <h2>The FIRE Drill</h2>
@@ -185,15 +191,17 @@ const MainPage = (props) => {
         </button>
       </form>
 
+      {/* Entries that appear after clicking save */}
 
-    {/* Entries that appear after clicking save */}
-
-
-      <div>
-        The FIRE Log:
-        {fiEntries.map((entry) => (
-          <div>{`${entry.index}. Monthly Income: ${entry.monthlyIncome} Monthly Expenses: ${entry.monthlyExpenses} Years to Freedom: ${entry.yearsToFiRemaining}`}</div>
-        ))}
+      <div className='fire-log'>
+        <div>The FIRE Log:</div>
+        {displayFIEntries && (
+          <Card>
+            {fiEntries.map((entry) => (
+              <div>{`${entry.index}. With a monthly income of $${entry.monthlyIncome} and monthly expenses of $${entry.monthlyExpenses}, it will take approximately ${entry.yearsToFiRemaining} years to retire`}</div>
+            ))}
+          </Card>
+        )}
       </div>
       <div className='update-delete-buttons'>
         <button className='update-button' onClick={updateDisplayHandler}>
@@ -204,74 +212,99 @@ const MainPage = (props) => {
         </button>
       </div>
 
-
       {/* Display after you click delete button */}
 
-
       {displayOption && (
-        <form onSubmit={deleteEntry}>
-          <input
-            type='number'
-            name='deletedEntry'
-            onChange={(e) => setEnteredNumber(e.target.value)}
-          ></input>
-          <button type='submit'>Submit</button>
-        </form>
+        <div className='delete-display'>
+          <div>Which entry would you like to delete?</div>
+          <form onSubmit={deleteEntry}>
+            <input
+              type='number'
+              name='deletedEntry'
+              onChange={(e) => setEnteredNumber(e.target.value)}
+            ></input>
+            <button type='submit'>Submit</button>
+          </form>
+        </div>
       )}
-
 
       {/*Display after you click update button */}
 
-
       {updateDisplay && (
-        <form onSubmit={updateEntryForm}>
-          <input
-            type='number'
-            name='updatedEntry'
-            onChange={(e) => setEnteredNumber(e.target.value)}
-          ></input>
-          <button type='submit'>Submit</button>
-        </form>
+        <div className='update-display'>
+          <div>Which entry do you want to update?</div>
+          <form onSubmit={updateEntryForm}>
+            <input
+              type='number'
+              name='updatedEntry'
+              onChange={(e) => setEnteredNumber(e.target.value)}
+            ></input>
+            <button className='update-log-button' type='submit'>
+              Submit
+            </button>
+          </form>
+        </div>
       )}
 
       {/* Display after you select which entry to update */}
 
-
       {updateDisplayForm && (
-        <form onSubmit={updateFIEntry}>
-          <input
-            value={monthlyIncome}
-            type='number'
-            min='1'
-            step='any'
-            name='updated-monthly-income'
-            onChange={(e) => setMonthlyIncome(e.target.value)}
-          ></input>
-          <input
-            value={monthlyExpenses}
-            type='number'
-            name='updated-monthly-expenses'
-            onChange={(e) => setMonthlyExpenses(e.target.value)}
-          ></input>
-          <input
-            value={principal}
-            type='number'
-            name='updated-principal'
-            onChange={(e) => setPrincipal(e.target.value)}
-          ></input>
-          <input
-            value={returnOnInvestment}
-            type='number'
-            name='updated-return-on-investment'
-            onChange={(e) => setReturnOnInvestment(e.target.value)}
-          ></input>
-          <input
-            value={safeWithdrawal}
-            type='number'
-            name='updated-safe-withdrawal'
-            onChange={(e) => setSafeWithdrawal(e.target.value)}
-          ></input>
-          <button type='submit'>Submit</button>
+        <form className='update-form' onSubmit={updateFIEntry}>
+          <div>
+            {" "}
+            <label>Monthly Take-Home Income ($):</label>
+            <input
+              value={monthlyIncome}
+              type='number'
+              min='1'
+              step='any'
+              name='updated-monthly-income'
+              onChange={(e) => setMonthlyIncome(e.target.value)}
+            ></input>
+          </div>
+          <div>
+            {" "}
+            <label>Monthly Expenses ($):</label>
+            <input
+              value={monthlyExpenses}
+              type='number'
+              name='updated-monthly-expenses'
+              onChange={(e) => setMonthlyExpenses(e.target.value)}
+            ></input>
+          </div>
+          <div>
+            {" "}
+            <label>Principal ($):</label>
+            <input
+              value={principal}
+              type='number'
+              name='updated-principal'
+              onChange={(e) => setPrincipal(e.target.value)}
+            ></input>
+          </div>
+          <div>
+            {" "}
+            <label>Return on Investment (%)):</label>
+            <input
+              value={returnOnInvestment}
+              type='number'
+              name='updated-return-on-investment'
+              onChange={(e) => setReturnOnInvestment(e.target.value)}
+            ></input>
+          </div>
+          <div>
+            {" "}
+            <label>Safe Withdrawal Rate (%):</label>
+            <input
+              value={safeWithdrawal}
+              type='number'
+              name='updated-safe-withdrawal'
+              onChange={(e) => setSafeWithdrawal(e.target.value)}
+            ></input>
+          </div>
+          <button className='finished-update-button' type='submit'>
+            Save
+          </button>
         </form>
       )}
     </div>
