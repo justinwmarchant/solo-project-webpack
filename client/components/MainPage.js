@@ -122,7 +122,7 @@ const MainPage = (props) => {
     //Main Form
 
     <div className='main-page-display'>
-      <h2>The FIRE Drill</h2>
+      <h2 style={{color: "black"}}>The FIRE Drill</h2>
       <form className='main-form' onSubmit={formSubmitHandler}>
         <div>
           <label id='main-form-label' htmlFor='monthly-income'>
@@ -194,7 +194,7 @@ const MainPage = (props) => {
       {/* Entries that appear after clicking save */}
 
       <div className='fire-log'>
-        <div>The FIRE Log:</div>
+        <div style={{color: "black"}}>The FIRE Log:</div>
         {displayFIEntries && (
           <Card>
             {fiEntries.map((entry) => (

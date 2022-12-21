@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(14, 0, 96);
+  background-color: #acccc7;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -14,7 +14,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: rgb(162, 0, 0);
+  background-color: #6f1a07;
   box-shadow: 0 2px 8px rgb(255, 255, 255);
   color: white;
   height: 100px;
@@ -39,9 +39,9 @@ a {
 
 .main-form, .update-form {
   padding: 1rem;
-  // box-shadow: 0 2px 8px rgb(255, 255, 255);
+  box-shadow: 0 2px 8px rgb(255, 255, 255);
   border-radius: 6px;
-  background: #8db046;
+  background: #fdc4bf;
   color: #000000;
   width: 500px;
   margin: 2rem auto;
@@ -62,10 +62,12 @@ a {
 
 .card {
   padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   border-radius: 14px;
-  background-color: #8db046;
-  color: rgb(0, 0, 0)
+  background-color: #6f1a07;
+  color: rgb(255, 254, 254)
 }
 
 button {
@@ -80,17 +82,17 @@ button {
   font-weight: 300;
   color: #ffffff;
   text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
-  background-color: rgb(162, 0, 0);
+  background-color: #6f1a07;
   text-align: center;
   transition: all 0.15s;
   width: auto;
 }
 
 button:hover {
-  text-shadow: 0 0 2em #7a95b0;
+  text-shadow: 0 0 2em #acccc7;
   color:#ffffff;
-  border-color: #7a95b0;
-  background-color: #7a95b0;
+  border-color:  #acccc7;
+  background-color:  #acccc7;
   cursor: pointer;
 }
 
